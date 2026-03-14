@@ -1,0 +1,28 @@
+internship-management-system
+│
+├── server.js
+├── package.json
+│
+├── config
+│   └── db.js
+│
+├── models
+│   ├── User.js
+│   └── Task.js
+│
+├── routes
+│   ├── authRoutes.js
+│   └── taskRoutes.js
+│
+├── middleware
+│   └── authMiddleware.js
+│
+├── uploads
+│
+└── public
+    ├── index.html
+    ├── register.html
+    ├── dashboard.html
+    ├── submit.html
+    ├── style.css
+    └── script.js
