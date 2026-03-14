@@ -1,0 +1,77 @@
+const API = "http://localhost:5000/api";
+
+async function register() {
+
+  const res = await fetch(API + "/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name.value,
+      email: email.value,
+      password: password.value
+    })
+  });
+
+  alert(await res.text());
+}
+
+async function login() {
+
+  const res = await fetch(API + "/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value
+    })
+  });
+
+  const data = await res.json();
+
+  localStorage.setItem("token", data.token);
+
+  window.location = "dashboard.html";
+}
+
+async function submitTask() {
+
+  const form = new FormData();
+
+  form.append("title", title.value);
+  form.append("description", description.value);
+  form.append("file", file.files[0]);
+
+  const res = await fetch(API + "/tasks/submit", {
+    method: "POST",
+    headers: {
+      "authorization": localStorage.getItem("token")
+    },
+    body: form
+  });
+
+  alert(await res.text());
+}
+
+async function loadTasks() {
+
+  const res = await fetch(API + "/tasks/mytasks", {
+    headers: {
+      "authorization": localStorage.getItem("token")
+    }
+  });
+
+  const tasks = await res.json();
+
+  const list = document.getElementById("tasks");
+
+  list.innerHTML = "";
+
+  tasks.forEach(t => {
+
+    const li = document.createElement("li");
+
+    li.innerText = t.title + " - " + t.description;
+
+    list.appendChild(li);
+  });
+}
