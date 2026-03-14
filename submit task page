@@ -1,0 +1,10 @@
+<h2>Submit Task</h2>
+
+<input id="title" placeholder="Task Title">
+<textarea id="description"></textarea>
+
+<input type="file" id="file">
+
+<button onclick="submitTask()">Submit</button>
+
+<script src="script.js"></script>
