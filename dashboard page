@@ -1,0 +1,9 @@
+<h2>Dashboard</h2>
+
+<a href="submit.html">Submit Task</a>
+
+<button onclick="loadTasks()">View My Tasks</button>
+
+<ul id="tasks"></ul>
+
+<script src="script.js"></script>
