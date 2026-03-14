@@ -1,0 +1,36 @@
+const express = require("express");
+const multer = require("multer");
+const Task = require("../models/Task");
+const auth = require("../middleware/authMiddleware");
+
+const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  }
+});
+
+const upload = multer({ storage });
+
+router.post("/submit", auth, upload.single("file"), async (req, res) => {
+
+  const task = new Task({
+    title: req.body.title,
+    description: req.body.description,
+    file: req.file.filename,
+    userId: req.user.id
+  });
+
+  await task.save();
+
+  res.send("Task Submitted");
+});
+
+router.get("/mytasks", auth, async (req, res) => {
+  const tasks = await Task.find({ userId: req.user.id });
+  res.json(tasks);
+});
+
+module.exports = router;
